@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Entry Add Karo — Qualify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8622A;--turmeric:#F2A93B;--cream:#FAF6F0;--cream-dark:#F0E9DF;--indigo:#1A1A2E;--text:#1C1C1C;--text-muted:#7A7A7A;--white:#FFFFFF;--green:#2A9D5C;--red:#D93025;--radius:18px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Noto Sans',sans-serif;background:var(--cream);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:32px}
+
+  .pattern-strip{height:4px;background:repeating-linear-gradient(90deg,var(--saffron) 0,var(--saffron) 8px,var(--turmeric) 8px,var(--turmeric) 16px,#fff 16px,#fff 20px,var(--indigo) 20px,var(--indigo) 28px,#fff 28px,#fff 32px);opacity:.65}
+
+  .header{padding:14px 20px;background:var(--white);display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  .back-btn{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:15px;flex-shrink:0;transition:all .15s}
+  .back-btn:active{background:var(--cream-dark);transform:scale(.93)}
+  .header-info{flex:1}
+  .page-title{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+  .page-sub{font-size:11.5px;color:var(--text-muted);margin-top:1px}
+
+  .hero-area{padding:20px 24px 16px;animation:fadeUp .45s ease both}
+  .hero-area h1{font-family:'Sora',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.8px;color:var(--indigo);line-height:1.2}
+  .hero-area h1 span{color:var(--saffron)}
+
+  /* type toggle */
+  .type-toggle{display:flex;margin:0 16px;background:var(--cream-dark);border-radius:14px;padding:4px;gap:4px;animation:fadeUp .4s .05s ease both}
+  .tt-opt{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;border-radius:11px;font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:-.2px;color:var(--text-muted)}
+  .tt-opt.active-credit{background:rgba(217,48,37,.1);color:var(--red)}
+  .tt-opt.active-debit{background:rgba(42,157,92,.1);color:var(--green)}
+
+  .form-card{margin:14px 16px 0;background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);animation:fadeUp .4s .1s ease both}
+
+  .field{margin-bottom:16px}
+  .field label{display:block;font-family:'Sora',sans-serif;font-size:11.5px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px}
+  .input-wrap{position:relative}
+  .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.4;pointer-events:none}
+  .field input, .field textarea{width:100%;padding:13px 14px 13px 42px;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;font-family:'Noto Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s;resize:none}
+  .field input:focus,.field textarea:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,98,42,.08)}
+  .field input::placeholder,.field textarea::placeholder{color:#C0BAB2}
+  .field textarea{min-height:80px;padding-top:13px;padding-bottom:13px}
+
+  /* amount big */
+  .amount-input{font-family:'Sora',sans-serif!important;font-size:28px!important;font-weight:800!important;letter-spacing:-1px!important;padding-left:52px!important}
+  .rupee-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:var(--text-muted);opacity:.5;pointer-events:none}
+
+  /* voice btn */
+  .voice-section{margin:14px 16px 0;animation:fadeUp .4s .15s ease both}
+  .voice-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;text-align:center}
+  .voice-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:var(--white);border:2px dashed rgba(0,0,0,.12);border-radius:16px;font-family:'Sora',sans-serif;font-size:14.5px;font-weight:700;color:var(--text-muted);cursor:pointer;transition:all .2s}
+  .voice-btn.listening{border-color:var(--saffron);background:rgba(232,98,42,.04);color:var(--saffron);animation:pulseBorder 1.2s infinite}
+  .voice-btn:active{transform:scale(.975)}
+  .voice-mic{font-size:22px}
+
+  @keyframes pulseBorder{0%,100%{box-shadow:0 0 0 0 rgba(232,98,42,.3)}50%{box-shadow:0 0 0 8px rgba(232,98,42,0)}}
+
+  .voice-hint{font-size:12px;color:var(--text-muted);text-align:center;margin-top:8px;line-height:1.5;opacity:.7}
+
+  .btn-submit{width:100%;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:white;background:var(--saffron);border:none;padding:15px;border-radius:14px;cursor:pointer;letter-spacing:-.2px;box-shadow:0 6px 20px rgba(232,98,42,.28);transition:all .18s;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:7px}
+  .btn-submit:active{transform:scale(.975);opacity:.88}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="header">
+  <a href="/khata/{{party.id}}/" class="back-btn">←</a>
+  <div class="header-info">
+    <div class="page-title">Entry Add Karo</div>
+    <div class="page-sub">{{party.name}}</div>
+  </div>
+</div>
+
+<div class="hero-area">
+  <h1>Kitna <span>amount</span><br>add karein?</h1>
+</div>
+
+<!-- Type toggle -->
+<div class="type-toggle" id="type-toggle">
+  <div class="tt-opt active-credit" onclick="setType('credit', this)">🔴 Unhe Dena Hai</div>
+  <div class="tt-opt" onclick="setType('debit', this)">🟢 Tumhe Milega</div>
+</div>
+
+<div class="form-card">
+  <form method="POST" action="/khata/{{party.id}}/add-entry/" id="entry-form">
+    {% csrf_token %}
+    <input type="hidden" name="type" id="type-hidden" value="credit">
+
+    <div class="field">
+      <label>Amount (₹)</label>
+      <div class="input-wrap">
+        <span class="rupee-icon">₹</span>
+        <input name="amount" type="number" placeholder="0" class="amount-input" id="amount-inp" required inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Note (optional)</label>
+      <div class="input-wrap">
+        <span class="input-icon" style="top:18px;transform:none">📝</span>
+        <textarea name="note" placeholder="e.g. Aalu ke paise, November mahina…" id="note-inp"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit" id="submit-btn">
+      <span id="btn-icon">🔴</span>
+      <span id="btn-text">Entry Save Karo</span>
+    </button>
+  </form>
+</div>
+
+<!-- Voice section -->
+<div class="voice-section">
+  <div class="voice-label">Ya awaz se bolo</div>
+  <button type="button" class="voice-btn" id="voice-btn" onclick="startVoice()">
+    <span class="voice-mic">🎤</span>
+    <span id="voice-text">Tap karke bolo — "Ramesh 500 udhaar"</span>
+  </button>
+  <div class="voice-hint">Hindi ya English mein bol sakte ho</div>
+</div>
+
+<script>
+  let currentType = 'credit';
+
+  function setType(val, el) {
+    currentType = val;
+    document.querySelectorAll('.tt-opt').forEach(o => {
+      o.classList.remove('active-credit','active-debit');
+    });
+    el.classList.add(val === 'credit' ? 'active-credit' : 'active-debit');
+    document.getElementById('type-hidden').value = val;
+    const icon = document.getElementById('btn-icon');
+    icon.textContent = val === 'credit' ? '🔴' : '🟢';
+  }
+
+  function startVoice() {
+    const btn = document.getElementById('voice-btn');
+    const vtext = document.getElementById('voice-text');
+    if (!('webkitSpeechRecognition' in window)) {
+      vtext.textContent = 'Voice aapke browser mein support nahi hai';
+      return;
+    }
+    const r = new webkitSpeechRecognition();
+    r.lang = 'hi-IN';
+    r.continuous = false;
+    r.interimResults = false;
+
+    r.onstart = () => { btn.classList.add('listening'); vtext.textContent = 'Sun raha hun…'; };
+    r.onend = () => { btn.classList.remove('listening'); };
+
+    r.onresult = (e) => {
+      const text = e.results[0][0].transcript;
+      vtext.textContent = '"' + text + '"';
+      const parts = text.split(' ');
+      // Try to extract amount (first number found)
+      const num = parts.find(p => !isNaN(p) && p.trim() !== '');
+      if (num) document.getElementById('amount-inp').value = num;
+      document.getElementById('note-inp').value = text;
+      // If word "udhaar" or "dena" detected → credit
+      const lower = text.toLowerCase();
+      if (lower.includes('dena') || lower.includes('udhaar')) setType('credit', document.querySelectorAll('.tt-opt')[0]);
+      else if (lower.includes('lena') || lower.includes('milega')) setType('debit', document.querySelectorAll('.tt-opt')[1]);
+    };
+
+    r.onerror = () => {
+      btn.classList.remove('listening');
+      vtext.textContent = 'Error aaya, dobara try karo';
+    };
+
+    r.start();
+  }
+</script>
+
+</body>
+</html>

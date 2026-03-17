@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sourcing — Qualify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8622A;--turmeric:#F2A93B;--cream:#FAF6F0;--cream-dark:#F0E9DF;--indigo:#1A1A2E;--text:#1C1C1C;--text-muted:#7A7A7A;--white:#FFFFFF;--green:#2A9D5C;--green-light:rgba(42,157,92,.1);--radius:18px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Noto Sans',sans-serif;background:var(--cream);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:90px}
+
+  .pattern-strip{height:4px;background:repeating-linear-gradient(90deg,var(--saffron) 0,var(--saffron) 8px,var(--turmeric) 8px,var(--turmeric) 16px,#fff 16px,#fff 20px,var(--indigo) 20px,var(--indigo) 28px,#fff 28px,#fff 32px);opacity:.65}
+
+  .header{padding:16px 20px;background:var(--white);display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 0 rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+  .header-left{display:flex;align-items:center;gap:10px}
+  .back-btn{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:15px;flex-shrink:0;transition:all .15s}
+  .back-btn:active{background:var(--cream-dark);transform:scale(.93)}
+  .page-title{font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+  .header-action{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--saffron);text-decoration:none;padding:7px 14px;background:rgba(232,98,42,.08);border-radius:50px;transition:all .15s}
+  .header-action:active{background:rgba(232,98,42,.18)}
+
+  /* best supplier banner */
+  .best-banner{margin:16px 16px 0;background:var(--indigo);border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden;text-decoration:none;display:block;animation:fadeUp .45s ease both}
+  .bb-glow{position:absolute;right:-40px;top:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(242,169,59,.18) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+  .bb-tag{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--turmeric);margin-bottom:5px;position:relative;z-index:1}
+  .bb-name{font-family:'Sora',sans-serif;font-size:20px;font-weight:800;color:white;letter-spacing:-.5px;position:relative;z-index:1}
+  .bb-meta{display:flex;gap:12px;margin-top:8px;position:relative;z-index:1}
+  .bb-stat{display:flex;align-items:center;gap:5px;font-size:13px;color:rgba(255,255,255,.6);font-weight:500}
+  .bb-stat span{font-family:'Sora',sans-serif;font-weight:700;color:white}
+
+  /* section label */
+  .section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--text-muted);padding:18px 20px 10px}
+
+  /* supplier card */
+  .supplier-card{background:var(--white);margin:0 16px 9px;padding:16px;border-radius:14px;display:flex;align-items:center;gap:13px;box-shadow:0 1px 10px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);text-decoration:none;color:inherit;transition:transform .15s;animation:fadeUp .4s ease both}
+  .supplier-card:active{transform:scale(.983)}
+
+  .supplier-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--indigo),#3D3D6A);display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:white;flex-shrink:0}
+
+  .supplier-info{flex:1}
+  .supplier-name{font-family:'Sora',sans-serif;font-size:14.5px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+  .supplier-meta{font-size:12px;color:var(--text-muted);margin-top:3px}
+
+  .supplier-right{text-align:right}
+  .score-badge{display:inline-flex;align-items:center;gap:4px;font-family:'Sora',sans-serif;font-size:14px;font-weight:800;color:var(--green);background:var(--green-light);padding:4px 10px;border-radius:50px;letter-spacing:-.2px}
+  .supplier-total{font-size:11.5px;color:var(--text-muted);margin-top:4px;font-weight:500}
+
+  /* compare button */
+  .compare-btn{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 16px;padding:14px;background:var(--indigo);border-radius:14px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:white;text-decoration:none;transition:all .15s}
+  .compare-btn:active{opacity:.85;transform:scale(.975)}
+
+  /* fab */
+  .fab{position:fixed;bottom:100px;right:20px;width:54px;height:54px;border-radius:50%;background:var(--saffron);display:flex;align-items:center;justify-content:center;font-size:24px;color:white;text-decoration:none;box-shadow:0 6px 20px rgba(232,98,42,.35);z-index:99;transition:all .18s}
+  .fab:active{transform:scale(.93);opacity:.9}
+
+  /* bottom nav */
+  .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid rgba(0,0,0,.07);display:flex;padding:10px 0 18px;z-index:100;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+  .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;transition:all .15s}
+  .nav-item:active{transform:scale(.9)}
+  .nav-icon{font-size:21px;line-height:1}
+  .nav-label{font-family:'Sora',sans-serif;font-size:10px;font-weight:600;color:var(--text-muted)}
+  .nav-item.active .nav-label{color:var(--saffron)}
+  .nav-item.active .nav-icon{transform:scale(1.1)}
+
+  .empty-state{text-align:center;padding:48px 32px}
+  .empty-icon{font-size:48px;margin-bottom:12px;opacity:.35}
+  .empty-title{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:var(--text-muted)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="header">
+  <div class="header-left">
+    <a href="/dashboard/" class="back-btn">←</a>
+    <div class="page-title">📦 Sourcing</div>
+  </div>
+  <a href="/sourcing/compare/" class="header-action">📊 Compare</a>
+</div>
+
+<!-- Best supplier banner -->
+{% if best_supplier %}
+<a href="/sourcing/{{best_supplier.supplier.id}}/" class="best-banner">
+  <div class="bb-glow"></div>
+  <div class="bb-tag">🏆 Best Supplier This Month</div>
+  <div class="bb-name">{{best_supplier.supplier.name}}</div>
+  <div class="bb-meta">
+    <div class="bb-stat">⭐ <span>{{best_supplier.quality}}</span> Quality</div>
+    <div class="bb-stat">💰 <span>₹{{best_supplier.avg_price}}</span> Avg Price</div>
+  </div>
+</a>
+{% endif %}
+
+<div class="section-label">Sabhi Suppliers ({{data|length}})</div>
+
+{% for item in data %}
+<a href="/sourcing/{{item.supplier.id}}/" class="supplier-card" style="animation-delay:{{ forloop.counter0 }}0ms">
+  <div class="supplier-avatar">{{item.supplier.name|first|upper}}</div>
+  <div class="supplier-info">
+    <div class="supplier-name">{{item.supplier.name}}</div>
+    <div class="supplier-meta">Total purchases: ₹{{item.total}}</div>
+  </div>
+  <div class="supplier-right">
+    <div class="score-badge">⭐ {{item.quality}}</div>
+    <div class="supplier-total">Quality score</div>
+  </div>
+</a>
+{% empty %}
+<div class="empty-state">
+  <div class="empty-icon">📦</div>
+  <div class="empty-title">Koi supplier nahi</div>
+</div>
+{% endfor %}
+
+{% if data %}
+<div style="height:10px"></div>
+<a href="/sourcing/compare/" class="compare-btn">📊 Prices Compare Karo</a>
+{% endif %}
+
+<a href="/sourcing/add/" class="fab">＋</a>
+
+<nav class="bottom-nav">
+  <a href="/dashboard/" class="nav-item"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></a>
+  <a href="/quality/" class="nav-item"><div class="nav-icon">📷</div><div class="nav-label">Quality</div></a>
+  <a href="/sourcing/" class="nav-item active"><div class="nav-icon">📦</div><div class="nav-label">Sourcing</div></a>
+  <a href="/khata/" class="nav-item"><div class="nav-icon">📒</div><div class="nav-label">Khata</div></a>
+  <a href="/profile/" class="nav-item"><div class="nav-icon">👤</div><div class="nav-label">Profile</div></a>
+</nav>
+
+</body>
+</html>

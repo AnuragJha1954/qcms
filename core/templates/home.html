@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Qualify — Smart Quality for Kirana Stores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --saffron: #E8622A;
+    --saffron-light: #F5845A;
+    --turmeric: #F2A93B;
+    --cream: #FAF6F0;
+    --cream-dark: #F0E9DF;
+    --indigo: #1A1A2E;
+    --indigo-mid: #2D2D4A;
+    --text: #1C1C1C;
+    --text-muted: #7A7A7A;
+    --white: #FFFFFF;
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    max-width: 430px;
+    margin: 0 auto;
+  }
+
+  /* ─── PATTERN STRIP ─── */
+  .pattern-strip {
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--saffron) 0px, var(--saffron) 8px,
+      var(--turmeric) 8px, var(--turmeric) 16px,
+      white 16px, white 20px,
+      var(--indigo) 20px, var(--indigo) 28px,
+      white 28px, white 32px
+    );
+    opacity: 0.65;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 20px;
+    background: rgba(250,246,240,0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--saffron); letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  .logo-dot {
+    width: 7px; height: 7px;
+    background: var(--turmeric); border-radius: 50%;
+    margin-bottom: 1px;
+    animation: pulse 2.4s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.4; transform:scale(1.5); }
+  }
+
+  .nav-actions { display: flex; gap: 8px; }
+
+  .btn-ghost {
+    font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--text); background: transparent;
+    border: 1.5px solid rgba(0,0,0,0.13);
+    padding: 7px 16px; border-radius: 50px;
+    text-decoration: none; transition: all 0.18s;
+  }
+  .btn-ghost:active { opacity: 0.65; transform: scale(0.96); }
+
+  .btn-primary-sm {
+    font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700;
+    color: white; background: var(--saffron);
+    border: none; padding: 8px 17px; border-radius: 50px;
+    text-decoration: none; transition: all 0.18s;
+  }
+  .btn-primary-sm:active { opacity: 0.8; transform: scale(0.96); }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 38px 20px 14px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--cream-dark); border: 1px solid rgba(232,98,42,0.22);
+    color: var(--saffron); font-size: 11.5px; font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    padding: 5px 12px; border-radius: 50px;
+    margin-bottom: 18px; letter-spacing: 0.2px;
+  }
+
+  .badge-live {
+    width: 6px; height: 6px; background: var(--saffron);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .hero h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 36px; font-weight: 800;
+    line-height: 1.1; letter-spacing: -1.2px;
+    color: var(--indigo);
+  }
+
+  .hero h1 .hl {
+    color: var(--saffron);
+    position: relative; display: inline-block;
+  }
+
+  .hero h1 .hl::after {
+    content: '';
+    position: absolute; left: 0; bottom: 0px;
+    width: 100%; height: 3px;
+    background: var(--turmeric); border-radius: 2px; opacity: 0.5;
+  }
+
+  .hero-sub {
+    margin-top: 14px; font-size: 15px;
+    color: var(--text-muted); line-height: 1.7;
+  }
+
+  .hero-cta {
+    margin-top: 26px; display: flex; gap: 10px;
+  }
+
+  .btn-cta {
+    flex: 1; font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: white; background: var(--saffron);
+    padding: 15px 20px; border-radius: 14px;
+    text-decoration: none; text-align: center;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
+    box-shadow: 0 8px 28px rgba(232,98,42,0.28);
+    letter-spacing: -0.2px; transition: all 0.18s;
+  }
+  .btn-cta:active { transform: scale(0.975); opacity: 0.9; }
+
+  .btn-outline {
+    font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600;
+    color: var(--text); background: transparent;
+    border: 1.5px solid rgba(0,0,0,0.12);
+    padding: 15px 20px; border-radius: 14px;
+    text-decoration: none; text-align: center;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s; white-space: nowrap;
+  }
+  .btn-outline:active { background: var(--cream-dark); }
+
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    margin: 26px 20px 0;
+    padding: 16px 20px;
+    background: var(--indigo); border-radius: var(--radius);
+    display: flex; justify-content: space-between;
+    animation: fadeUp 0.5s 0.15s ease both;
+  }
+
+  .trust-item { text-align: center; flex: 1; }
+  .trust-item + .trust-item { border-left: 1px solid rgba(255,255,255,0.08); }
+
+  .trust-num {
+    font-family: 'Sora', sans-serif; font-size: 19px;
+    font-weight: 800; color: var(--turmeric); letter-spacing: -0.5px;
+  }
+
+  .trust-label {
+    font-size: 10.5px; color: rgba(255,255,255,0.45);
+    margin-top: 3px; font-weight: 500; letter-spacing: 0.2px;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .section-label {
+    font-family: 'Sora', sans-serif; font-size: 11px;
+    font-weight: 700; letter-spacing: 1.4px;
+    text-transform: uppercase; color: var(--text-muted);
+    padding: 34px 20px 14px;
+  }
+
+  /* ─── MODULES ─── */
+  .modules {
+    padding: 0 20px; display: flex; flex-direction: column; gap: 11px;
+  }
+
+  .module-card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 18px 18px; display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 1px 14px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+    text-decoration: none; color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+    animation: fadeUp 0.45s ease both;
+  }
+  .module-card:nth-child(1) { animation-delay: 0.08s; }
+  .module-card:nth-child(2) { animation-delay: 0.15s; }
+  .module-card:nth-child(3) { animation-delay: 0.22s; }
+  .module-card:nth-child(4) { animation-delay: 0.29s; }
+  .module-card:active { transform: scale(0.983); box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
+
+  .module-icon {
+    width: 50px; height: 50px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 21px; flex-shrink: 0;
+  }
+  .ic-a { background: rgba(232,98,42,0.10); }
+  .ic-b { background: rgba(242,169,59,0.13); }
+  .ic-c { background: rgba(26,26,46,0.07); }
+  .ic-d { background: rgba(34,150,80,0.10); }
+
+  .module-text { flex: 1; }
+
+  .module-title {
+    font-family: 'Sora', sans-serif; font-size: 14.5px;
+    font-weight: 700; color: var(--text); letter-spacing: -0.3px;
+  }
+
+  .module-desc {
+    font-size: 12.5px; color: var(--text-muted);
+    margin-top: 3px; line-height: 1.5;
+  }
+
+  .module-arrow {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 15px; flex-shrink: 0;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section {
+    margin: 8px 20px 0;
+    background: var(--indigo); border-radius: var(--radius);
+    padding: 26px 22px; overflow: hidden; position: relative;
+  }
+
+  .how-glow {
+    position: absolute; right: -50px; top: -50px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(232,98,42,0.18) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .how-glow2 {
+    position: absolute; left: -30px; bottom: -30px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(242,169,59,0.1) 0%, transparent 65%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .how-title {
+    font-family: 'Sora', sans-serif; font-size: 20px;
+    font-weight: 800; color: white; letter-spacing: -0.5px;
+    margin-bottom: 22px; position: relative; z-index: 1;
+  }
+  .how-title span { color: var(--turmeric); }
+
+  .step {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 20px; position: relative; z-index: 1;
+  }
+  .step:last-child { margin-bottom: 0; }
+
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.14);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-size: 13px;
+    font-weight: 700; color: var(--turmeric); flex-shrink: 0;
+  }
+
+  .step-title {
+    font-family: 'Sora', sans-serif; font-size: 14.5px;
+    font-weight: 700; color: white; letter-spacing: -0.2px;
+  }
+
+  .step-desc {
+    font-size: 12.5px; color: rgba(255,255,255,0.45);
+    margin-top: 3px; line-height: 1.55;
+  }
+
+  /* ─── TESTIMONIAL ─── */
+  .testimonial {
+    margin: 12px 20px 0;
+    background: var(--white); border-radius: var(--radius);
+    padding: 22px 20px;
+    box-shadow: 0 1px 14px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .quote-mark {
+    font-size: 40px; line-height: 1;
+    color: var(--saffron); font-family: Georgia, serif;
+    opacity: 0.35; margin-bottom: 2px;
+  }
+
+  .quote-text {
+    font-size: 14.5px; color: var(--text);
+    line-height: 1.7; font-style: italic;
+  }
+
+  .quote-author {
+    margin-top: 16px; display: flex; align-items: center; gap: 10px;
+  }
+
+  .author-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--turmeric));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Sora', sans-serif; font-size: 15px;
+    font-weight: 700; color: white; flex-shrink: 0;
+  }
+
+  .author-name {
+    font-family: 'Sora', sans-serif; font-size: 13px;
+    font-weight: 700; color: var(--text);
+  }
+  .author-store { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+  /* ─── BOTTOM CTA ─── */
+  .bottom-cta {
+    margin: 16px 20px 0;
+    background: linear-gradient(135deg, var(--saffron) 0%, #E8972A 100%);
+    border-radius: var(--radius); padding: 30px 24px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+
+  .cta-circle1 {
+    position: absolute; right: -30px; bottom: -30px;
+    width: 130px; height: 130px;
+    background: rgba(255,255,255,0.09); border-radius: 50%;
+    pointer-events: none;
+  }
+  .cta-circle2 {
+    position: absolute; left: -20px; top: -20px;
+    width: 90px; height: 90px;
+    background: rgba(255,255,255,0.07); border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .bottom-cta h2 {
+    font-family: 'Sora', sans-serif; font-size: 23px;
+    font-weight: 800; color: white; letter-spacing: -0.5px;
+    position: relative; z-index: 1; line-height: 1.2;
+  }
+
+  .bottom-cta p {
+    font-size: 13.5px; color: rgba(255,255,255,0.78);
+    margin-top: 7px; line-height: 1.5;
+    position: relative; z-index: 1;
+  }
+
+  .btn-white {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 22px; background: white;
+    color: var(--saffron); font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 800;
+    padding: 13px 26px; border-radius: 50px;
+    text-decoration: none; position: relative; z-index: 1;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.14); transition: all 0.18s;
+    letter-spacing: -0.2px;
+  }
+  .btn-white:active { transform: scale(0.96); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 26px 20px 36px; text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.06); margin-top: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Sora', sans-serif; font-size: 20px;
+    font-weight: 800; color: var(--saffron); letter-spacing: -0.5px;
+  }
+
+  .footer-tagline { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .footer-links {
+    margin-top: 16px; display: flex; justify-content: center; gap: 22px;
+  }
+  .footer-links a {
+    font-size: 12.5px; color: var(--text-muted);
+    text-decoration: none; font-weight: 500;
+  }
+
+  .footer-copy {
+    margin-top: 18px; font-size: 11px;
+    color: rgba(0,0,0,0.22);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Qualify<span class="logo-dot"></span></div>
+  <div class="nav-actions">
+    <a href="/auth/login/" class="btn-ghost">Login</a>
+    <a href="/auth/signup/" class="btn-primary-sm">Sign up</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="badge-live"></span>
+    Made for Indian Kirana Stores
+  </div>
+
+  <h1>Quality that<br><span class="hl">Kirana</span><br>Owners Trust</h1>
+
+  <p class="hero-sub">
+    AI-powered quality checks, supplier tracking, and digital khata — all in one app built for your dukaan.
+  </p>
+
+  <div class="hero-cta">
+    <a href="/auth/signup/" class="btn-cta">Shuru Karein →</a>
+    <a href="#modules" class="btn-outline">Features</a>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item">
+    <div class="trust-num">2,400+</div>
+    <div class="trust-label">Active Stores</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">98%</div>
+    <div class="trust-label">AI Accuracy</div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-num">Free</div>
+    <div class="trust-label">To Start</div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<div class="section-label" id="modules">What You Can Do</div>
+
+<div class="modules">
+  <a href="#" class="module-card">
+    <div class="module-icon ic-a">📷</div>
+    <div class="module-text">
+      <div class="module-title">Quality Match</div>
+      <div class="module-desc">Click a photo — AI checks if product meets your quality standard in seconds.</div>
+    </div>
+    <div class="module-arrow">›</div>
+  </a>
+
+  <a href="#" class="module-card">
+    <div class="module-icon ic-b">📋</div>
+    <div class="module-text">
+      <div class="module-title">Quality Information</div>
+      <div class="module-desc">Store and manage all quality parameters for every product you sell.</div>
+    </div>
+    <div class="module-arrow">›</div>
+  </a>
+
+  <a href="#" class="module-card">
+    <div class="module-icon ic-c">📦</div>
+    <div class="module-text">
+      <div class="module-title">Sourcing Information</div>
+      <div class="module-desc">Track suppliers, rates, and delivery history — all in one place.</div>
+    </div>
+    <div class="module-arrow">›</div>
+  </a>
+
+  <a href="#" class="module-card">
+    <div class="module-icon ic-d">📒</div>
+    <div class="module-text">
+      <div class="module-title">Khata Book</div>
+      <div class="module-desc">Manage vendor and customer credit digitally. No more paper khata.</div>
+    </div>
+    <div class="module-arrow">›</div>
+  </a>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section-label">Kaise Kaam Karta Hai</div>
+
+<div class="how-section">
+  <div class="how-glow"></div>
+  <div class="how-glow2"></div>
+
+  <div class="how-title">3 simple <span>steps</span></div>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div>
+      <div class="step-title">📷 Photo Lein</div>
+      <div class="step-desc">Click a photo of the incoming product using your phone camera.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div>
+      <div class="step-title">🤖 AI Check Karo</div>
+      <div class="step-desc">Qualify's AI compares it against your saved quality reference in seconds.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div>
+      <div class="step-title">✅ Decision Lo</div>
+      <div class="step-desc">Accept, reject, or flag the batch. Reports auto-save to your account.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="section-label">Store Owners Love It</div>
+
+<div class="testimonial">
+  <div class="quote-mark">"</div>
+  <div class="quote-text">
+    Pehle sab paper pe likhte the, galtiyan hoti thi. Ab Qualify se har cheez track hoti hai. Supplier bhi seedha maal bhejta hai.
+  </div>
+  <div class="quote-author">
+    <div class="author-avatar">R</div>
+    <div>
+      <div class="author-name">Ramesh Agarwal</div>
+      <div class="author-store">Agarwal Kirana Store, Pune</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM CTA -->
+<div class="bottom-cta">
+  <div class="cta-circle1"></div>
+  <div class="cta-circle2"></div>
+  <h2>Apni Dukaan Ko<br>Smarter Banao</h2>
+  <p>Free mein shuru karein. No credit card needed.</p>
+  <a href="/auth/signup/" class="btn-white">Register Now →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Qualify</div>
+  <div class="footer-tagline">Smart Quality for Kirana Stores</div>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Privacy</a>
+    <a href="#">Help</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Qualify. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

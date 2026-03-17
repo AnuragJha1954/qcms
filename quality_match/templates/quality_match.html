@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quality Check - Qualify</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#faf7f2;
+margin:0;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 3px 10px rgba(0,0,0,0.05);
+}
+
+h2{
+margin-bottom:10px;
+}
+
+select,input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ddd;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:15px;
+background:#e67e22;
+border:none;
+color:white;
+border-radius:8px;
+font-weight:bold;
+}
+
+.result{
+margin-top:20px;
+padding:15px;
+border-radius:10px;
+display:none;
+}
+
+.good{background:#e8f8f0;color:#2a9d5c;}
+.accept{background:#fff5e6;color:#c47f00;}
+.reject{background:#fdecea;color:#d93025;}
+
+img{
+width:100%;
+margin-top:10px;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>📷 Quality Check</h2>
+
+<form id="qualityForm">
+
+<select name="product_id" required>
+<option value="">Select Product</option>
+{% for p in products %}
+<option value="{{p.id}}">{{p.name}}</option>
+{% endfor %}
+</select>
+
+<input type="file" name="image" accept="image/*" capture="environment" required>
+
+<img id="preview" style="display:none;"/>
+
+<button type="submit">Check Quality</button>
+
+</form>
+
+<div id="resultBox" class="result"></div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("qualityForm");
+const resultBox = document.getElementById("resultBox");
+const preview = document.getElementById("preview");
+
+form.image.onchange = function(e){
+    const file = e.target.files[0];
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+}
+
+form.onsubmit = async function(e){
+
+    e.preventDefault();
+
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Analyzing... ⏳";
+
+    const formData = new FormData(form);
+
+    const res = await fetch("/quality/api/", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    let cls = "accept";
+
+    if(data.result === "GOOD") cls = "good";
+    if(data.result === "REJECT") cls = "reject";
+
+    resultBox.className = "result " + cls;
+
+    resultBox.innerHTML = `
+        <h3>Result: ${data.result}</h3>
+        <p><b>Score:</b> ${data.match_score}</p>
+        <p>${data.reason}</p>
+    `;
+}
+
+</script>
+
+</body>
+</html>

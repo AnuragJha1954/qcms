@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Quality Check — Qualify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8622A;--turmeric:#F2A93B;--cream:#FAF6F0;--cream-dark:#F0E9DF;--indigo:#1A1A2E;--text:#1C1C1C;--text-muted:#7A7A7A;--white:#FFFFFF;--green:#2A9D5C;--red:#D93025;--radius:18px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Noto Sans',sans-serif;background:var(--cream);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:32px}
+
+  .pattern-strip{height:4px;background:repeating-linear-gradient(90deg,var(--saffron) 0,var(--saffron) 8px,var(--turmeric) 8px,var(--turmeric) 16px,#fff 16px,#fff 20px,var(--indigo) 20px,var(--indigo) 28px,#fff 28px,#fff 32px);opacity:.65}
+
+  .header{padding:14px 20px;background:var(--white);display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  .back-btn{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:15px;flex-shrink:0;transition:all .15s}
+  .back-btn:active{background:var(--cream-dark);transform:scale(.93)}
+  .header-info{flex:1}
+  .page-title{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+  .page-sub{font-size:11.5px;color:var(--text-muted);margin-top:1px}
+
+  /* camera upload */
+  .camera-zone{margin:16px 16px 0;animation:fadeUp .45s ease both}
+  .camera-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+  .camera-upload{width:100%;height:180px;background:var(--white);border:2px dashed rgba(0,0,0,.12);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;position:relative;overflow:hidden;transition:all .18s}
+  .camera-upload.has-image{border-color:var(--green);border-style:solid}
+  .camera-upload:active{background:var(--cream-dark)}
+  .camera-input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer}
+  .camera-icon{font-size:40px;opacity:.4}
+  .camera-text{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted)}
+  .camera-hint{font-size:12px;color:var(--text-muted);opacity:.6}
+  .preview-img{width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0;display:none;border-radius:calc(var(--radius) - 2px)}
+
+  .form-card{margin:14px 16px 0;background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);animation:fadeUp .4s .08s ease both}
+
+  .field{margin-bottom:16px}
+  .field:last-child{margin-bottom:0}
+  .field label{display:block;font-family:'Sora',sans-serif;font-size:11.5px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px}
+  .input-wrap{position:relative}
+  .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.4;pointer-events:none}
+  .field input,.field select{width:100%;padding:13px 14px 13px 42px;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;font-family:'Noto Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;-webkit-appearance:none;appearance:none;transition:border-color .18s,background .18s}
+  .field input:focus,.field select:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,98,42,.08)}
+  .field input::placeholder{color:#C0BAB2}
+  .field select{cursor:pointer}
+  .select-arrow{position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;opacity:.4;font-size:12px}
+
+  /* score slider */
+  .score-display{text-align:center;margin-bottom:10px}
+  .score-num{font-family:'Sora',sans-serif;font-size:38px;font-weight:800;letter-spacing:-1.5px;color:var(--saffron)}
+  .score-label{font-size:12px;color:var(--text-muted);margin-top:2px}
+  input[type=range]{width:100%;-webkit-appearance:none;height:6px;border-radius:3px;background:var(--cream-dark);outline:none}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--saffron);cursor:pointer;box-shadow:0 2px 8px rgba(232,98,42,.3)}
+
+  .btn-submit{width:100%;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:white;background:var(--saffron);border:none;padding:15px;border-radius:14px;cursor:pointer;letter-spacing:-.2px;box-shadow:0 6px 20px rgba(232,98,42,.28);transition:all .18s;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:7px}
+  .btn-submit:active{transform:scale(.975);opacity:.88}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="header">
+  <a href="/quality/{{product.id}}/" class="back-btn">←</a>
+  <div class="header-info">
+    <div class="page-title">Quality Check Karo</div>
+    <div class="page-sub">{{product.name}}</div>
+  </div>
+</div>
+
+<!-- Camera upload zone -->
+<div class="camera-zone">
+  <div class="camera-label">Product ki Photo Lo</div>
+  <div class="camera-upload" id="upload-zone">
+    <input type="file" class="camera-input" accept="image/*" capture="environment" id="cam-input" onchange="previewImage(event)">
+    <img id="preview-img" class="preview-img" alt="">
+    <div class="camera-icon" id="cam-placeholder">📷</div>
+    <div class="camera-text" id="cam-text">Tap karke photo lo</div>
+    <div class="camera-hint" id="cam-hint">Camera ya gallery se upload karo</div>
+  </div>
+</div>
+
+<div class="form-card">
+  <form method="POST" action="/quality/{{product.id}}/add-check/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="image" id="hidden-image">
+
+    <div class="field">
+      <label>Supplier Name</label>
+      <div class="input-wrap">
+        <span class="input-icon">🏭</span>
+        <input name="supplier_name" type="text" placeholder="e.g. Rajesh Traders" required autocapitalize="words">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Quality Score (0–100)</label>
+      <div class="score-display">
+        <div class="score-num" id="score-display">75</div>
+        <div class="score-label" id="score-grade-label">Good Quality</div>
+      </div>
+      <input type="range" name="score" id="score-slider" min="0" max="100" value="75" oninput="updateScore(this.value)">
+    </div>
+
+    <button type="submit" class="btn-submit">
+      📋 Check Save Karo
+    </button>
+  </form>
+</div>
+
+<script>
+  function previewImage(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = document.getElementById('preview-img');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('cam-placeholder').style.display = 'none';
+      document.getElementById('cam-text').style.display = 'none';
+      document.getElementById('cam-hint').style.display = 'none';
+      document.getElementById('upload-zone').classList.add('has-image');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function updateScore(val) {
+    const v = parseInt(val);
+    document.getElementById('score-display').textContent = v;
+    const el = document.getElementById('score-display');
+    const label = document.getElementById('score-grade-label');
+    if (v >= 80) {
+      el.style.color = 'var(--green)';
+      label.textContent = '✅ Excellent Quality — Grade A';
+    } else if (v >= 60) {
+      el.style.color = '#C47F00';
+      label.textContent = '⚠️ Average Quality — Grade B';
+    } else {
+      el.style.color = 'var(--red)';
+      label.textContent = '❌ Poor Quality — Grade C';
+    }
+    // update slider gradient
+    const pct = v + '%';
+    document.getElementById('score-slider').style.background = 
+      `linear-gradient(to right, var(--saffron) 0%, var(--saffron) ${pct}, var(--cream-dark) ${pct}, var(--cream-dark) 100%)`;
+  }
+
+  // init
+  updateScore(75);
+</script>
+
+</body>
+</html>

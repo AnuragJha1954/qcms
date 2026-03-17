@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Supplier</title>
+
+<style>
+body {
+  font-family:sans-serif;
+  background:#FAF6F0;
+  max-width:430px;
+  margin:auto;
+}
+
+.header {
+  padding:16px;
+  background:white;
+  font-weight:700;
+}
+
+.card {
+  background:white;
+  margin:10px 16px;
+  padding:12px;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.btn {
+  margin:16px;
+  display:block;
+  padding:14px;
+  background:#E8622A;
+  color:white;
+  text-align:center;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">{{supplier.name}}</div>
+
+{% for p in procurements %}
+<div class="card">
+  <div>
+    <div>{{p.product.name}}</div>
+    <small>{{p.created_at}}</small>
+  </div>
+
+  <div>
+    ₹{{p.total_price}}<br>
+    ⭐ {{p.quality_score}}
+  </div>
+</div>
+{% endfor %}
+
+<a href="/sourcing/{{supplier.id}}/add/" class="btn">+ Add Purchase</a>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Add Party — Qualify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8622A;--turmeric:#F2A93B;--cream:#FAF6F0;--cream-dark:#F0E9DF;--indigo:#1A1A2E;--text:#1C1C1C;--text-muted:#7A7A7A;--white:#FFFFFF;--green:#2A9D5C;--radius:18px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Noto Sans',sans-serif;background:var(--cream);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:32px}
+
+  .pattern-strip{height:4px;background:repeating-linear-gradient(90deg,var(--saffron) 0,var(--saffron) 8px,var(--turmeric) 8px,var(--turmeric) 16px,#fff 16px,#fff 20px,var(--indigo) 20px,var(--indigo) 28px,#fff 28px,#fff 32px);opacity:.65}
+
+  .header{padding:14px 20px;background:var(--white);display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  .back-btn{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:15px;flex-shrink:0;transition:all .15s}
+  .back-btn:active{background:var(--cream-dark);transform:scale(.93)}
+  .page-title{font-family:'Sora',sans-serif;font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+
+  .hero-area{padding:22px 24px 18px;animation:fadeUp .45s ease both}
+  .hero-area h1{font-family:'Sora',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.8px;color:var(--indigo);line-height:1.2}
+  .hero-area h1 span{color:var(--saffron)}
+  .hero-area p{margin-top:6px;font-size:14px;color:var(--text-muted);line-height:1.55}
+
+  /* type selector */
+  .type-selector{display:flex;gap:10px;margin:0 16px 0;animation:fadeUp .4s .05s ease both}
+  .type-opt{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;background:var(--white);border:2px solid rgba(0,0,0,.09);border-radius:var(--radius);cursor:pointer;transition:all .18s}
+  .type-opt.selected{border-color:var(--saffron);background:rgba(232,98,42,.04)}
+  .type-opt:active{transform:scale(.97)}
+  .type-emoji{font-size:26px}
+  .type-label{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--text-muted)}
+  .type-opt.selected .type-label{color:var(--saffron)}
+
+  .form-card{margin:14px 16px 0;background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);animation:fadeUp .4s .1s ease both}
+
+  .field{margin-bottom:15px}
+  .field:last-child{margin-bottom:0}
+  .field label{display:block;font-family:'Sora',sans-serif;font-size:11.5px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px}
+  .input-wrap{position:relative}
+  .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.4;pointer-events:none}
+  .field input{width:100%;padding:13px 14px 13px 42px;border:1.5px solid rgba(0,0,0,.1);border-radius:12px;font-family:'Noto Sans',sans-serif;font-size:15px;color:var(--text);background:var(--cream);outline:none;-webkit-appearance:none;transition:border-color .18s,background .18s}
+  .field input:focus{border-color:var(--saffron);background:var(--white);box-shadow:0 0 0 3px rgba(232,98,42,.08)}
+  .field input::placeholder{color:#C0BAB2}
+
+  .phone-prefix{position:absolute;left:0;top:0;bottom:0;display:flex;align-items:center;padding:0 12px;font-family:'Sora',sans-serif;font-size:13px;font-weight:600;color:var(--text-muted);border-right:1.5px solid rgba(0,0,0,.1);width:58px;justify-content:center;pointer-events:none}
+  .phone-input{padding-left:68px!important}
+
+  .btn-submit{width:100%;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;color:white;background:var(--saffron);border:none;padding:15px;border-radius:14px;cursor:pointer;letter-spacing:-.2px;box-shadow:0 6px 20px rgba(232,98,42,.28);transition:all .18s;margin-top:20px}
+  .btn-submit:active{transform:scale(.975);opacity:.88}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="header">
+  <a href="/khata/" class="back-btn">←</a>
+  <div class="page-title">Party Add Karo</div>
+</div>
+
+<div class="hero-area">
+  <h1>Naya <span>party</span><br>add karo</h1>
+  <p>Customer ya vendor ka naam aur phone add karo.</p>
+</div>
+
+<!-- Type selector -->
+<div class="type-selector" id="type-selector">
+  <div class="type-opt selected" onclick="selectType('customer', this)">
+    <div class="type-emoji">🛒</div>
+    <div class="type-label">Customer</div>
+  </div>
+  <div class="type-opt" onclick="selectType('vendor', this)">
+    <div class="type-emoji">🏭</div>
+    <div class="type-label">Vendor</div>
+  </div>
+</div>
+
+<div class="form-card">
+  <form method="POST" action="/khata/add/">
+    {% csrf_token %}
+    <input type="hidden" name="type" id="type-input" value="customer">
+
+    <div class="field">
+      <label>Full Name</label>
+      <div class="input-wrap">
+        <span class="input-icon">👤</span>
+        <input name="name" type="text" placeholder="e.g. Ramesh Sharma" required autocapitalize="words">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Phone Number</label>
+      <div class="input-wrap">
+        <div class="phone-prefix">🇮🇳 +91</div>
+        <input name="phone" type="tel" placeholder="98765 43210" class="phone-input" maxlength="10" inputmode="numeric">
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Party Add Karo →</button>
+  </form>
+</div>
+
+<script>
+function selectType(val, el) {
+  document.querySelectorAll('.type-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('type-input').value = val;
+}
+</script>
+</body>
+</html>

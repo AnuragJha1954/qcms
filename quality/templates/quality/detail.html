@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>{{product.name}} — Quality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#E8622A;--turmeric:#F2A93B;--cream:#FAF6F0;--cream-dark:#F0E9DF;--indigo:#1A1A2E;--text:#1C1C1C;--text-muted:#7A7A7A;--white:#FFFFFF;--green:#2A9D5C;--green-light:rgba(42,157,92,.1);--amber:#C47F00;--amber-light:rgba(242,169,59,.12);--red:#D93025;--red-light:rgba(217,48,37,.08);--radius:18px}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Noto Sans',sans-serif;background:var(--cream);color:var(--text);max-width:430px;margin:0 auto;min-height:100vh;padding-bottom:120px}
+
+  .pattern-strip{height:4px;background:repeating-linear-gradient(90deg,var(--saffron) 0,var(--saffron) 8px,var(--turmeric) 8px,var(--turmeric) 16px,#fff 16px,#fff 20px,var(--indigo) 20px,var(--indigo) 28px,#fff 28px,#fff 32px);opacity:.65}
+
+  .header{padding:14px 20px;background:var(--white);display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(0,0,0,.06);position:sticky;top:0;z-index:100}
+  .back-btn{width:34px;height:34px;border-radius:50%;background:var(--cream);border:1.5px solid rgba(0,0,0,.08);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--text);font-size:15px;flex-shrink:0;transition:all .15s}
+  .back-btn:active{background:var(--cream-dark);transform:scale(.93)}
+  .header-info{flex:1}
+  .header-name{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;color:var(--text);letter-spacing:-.4px}
+  .header-sub{font-size:11.5px;color:var(--text-muted);margin-top:1px}
+
+  /* hero card */
+  .hero-card{margin:16px 16px 0;background:var(--indigo);border-radius:var(--radius);padding:20px 22px;position:relative;overflow:hidden;animation:fadeUp .45s ease both}
+  .hc-glow{position:absolute;right:-40px;top:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(232,98,42,.2) 0%,transparent 65%);border-radius:50%;pointer-events:none}
+  .hc-product{font-family:'Sora',sans-serif;font-size:22px;font-weight:800;color:white;letter-spacing:-.6px;position:relative;z-index:1}
+  .hc-stats{display:flex;gap:16px;margin-top:14px;position:relative;z-index:1}
+  .hc-stat{text-align:center}
+  .hc-stat-num{font-family:'Sora',sans-serif;font-size:18px;font-weight:800;letter-spacing:-.5px}
+  .hc-stat-label{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:2px;font-weight:500}
+
+  /* tabs */
+  .tabs{display:flex;margin:14px 16px 0;background:var(--cream-dark);border-radius:12px;padding:4px;gap:4px;animation:fadeUp .4s .06s ease both}
+  .tab{flex:1;text-align:center;padding:10px 6px;border-radius:9px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--text-muted);cursor:pointer;transition:all .18s}
+  .tab.active{background:var(--white);color:var(--text);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+
+  .section-label{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:var(--text-muted);padding:18px 20px 10px}
+
+  /* param card */
+  .param-card{background:var(--white);margin:0 16px 8px;padding:14px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);animation:fadeUp .4s ease both}
+  .param-icon{width:38px;height:38px;border-radius:10px;background:rgba(232,98,42,.08);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  .param-body{flex:1}
+  .param-name{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+  .param-range{font-size:12px;color:var(--text-muted);margin-top:3px}
+  .param-ideal{font-family:'Sora',sans-serif;font-size:13px;font-weight:700;color:var(--saffron);background:rgba(232,98,42,.08);padding:4px 10px;border-radius:50px;flex-shrink:0}
+
+  /* check card */
+  .check-card{background:var(--white);margin:0 16px 8px;padding:14px 16px;border-radius:14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 8px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);animation:fadeUp .4s ease both}
+  .check-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+  .check-body{flex:1}
+  .check-supplier{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px}
+  .check-date{font-size:12px;color:var(--text-muted);margin-top:2px}
+  .check-right{text-align:right}
+  .check-score{font-family:'Sora',sans-serif;font-size:16px;font-weight:800;letter-spacing:-.4px}
+  .grade-badge{font-family:'Sora',sans-serif;font-size:12px;font-weight:800;padding:3px 8px;border-radius:50px;margin-top:4px;display:inline-block}
+  .gA{background:var(--green-light);color:var(--green)}
+  .gB{background:var(--amber-light);color:var(--amber)}
+  .gC{background:var(--red-light);color:var(--red)}
+
+  /* tab panels */
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+
+  /* action bar */
+  .action-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--white);border-top:1px solid rgba(0,0,0,.07);padding:12px 16px 24px;display:flex;gap:10px;box-shadow:0 -4px 20px rgba(0,0,0,.06);z-index:100}
+  .ab-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:13px;border-radius:14px;font-family:'Sora',sans-serif;font-size:13.5px;font-weight:700;text-decoration:none;transition:all .15s;letter-spacing:-.2px;border:none;cursor:pointer}
+  .ab-primary{background:var(--saffron);color:white;box-shadow:0 4px 14px rgba(232,98,42,.25)}
+  .ab-primary:active{opacity:.85;transform:scale(.975)}
+  .ab-secondary{background:var(--cream-dark);color:var(--text);border:1.5px solid rgba(0,0,0,.09)}
+  .ab-secondary:active{background:var(--cream)}
+
+  .empty-state{text-align:center;padding:36px 32px}
+  .empty-icon{font-size:40px;margin-bottom:10px;opacity:.35}
+  .empty-title{font-family:'Sora',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="header">
+  <a href="/quality/" class="back-btn">←</a>
+  <div class="header-info">
+    <div class="header-name">{{product.name}}</div>
+    <div class="header-sub">Quality Profile</div>
+  </div>
+</div>
+
+<!-- Hero card -->
+<div class="hero-card">
+  <div class="hc-glow"></div>
+  <div class="hc-product">{{product.name}}</div>
+  <div class="hc-stats">
+    <div class="hc-stat">
+      <div class="hc-stat-num" style="color:var(--turmeric)">{{params|length}}</div>
+      <div class="hc-stat-label">Parameters</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-stat-num" style="color:#56D98B">{{checks|length}}</div>
+      <div class="hc-stat-label">Checks Done</div>
+    </div>
+    <div class="hc-stat">
+      <div class="hc-stat-num" style="color:white">{{latest_grade|default:"—"}}</div>
+      <div class="hc-stat-label">Latest Grade</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('params', this)">📋 Parameters</div>
+  <div class="tab" onclick="switchTab('checks', this)">✅ Quality Checks</div>
+</div>
+
+<!-- PARAMS tab -->
+<div class="tab-panel active" id="tab-params">
+  <div class="section-label">Quality Parameters</div>
+  {% for p in params %}
+  <div class="param-card" style="animation-delay:{{ forloop.counter0 }}0ms">
+    <div class="param-icon">📊</div>
+    <div class="param-body">
+      <div class="param-name">{{p.name}}</div>
+      <div class="param-range">Range: {{p.min_value}} – {{p.max_value}}</div>
+    </div>
+    <div class="param-ideal">Ideal: {{p.ideal_value}}</div>
+  </div>
+  {% empty %}
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <div class="empty-title">Koi parameter nahi set kiya</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- CHECKS tab -->
+<div class="tab-panel" id="tab-checks">
+  <div class="section-label">Quality Checks</div>
+  {% for c in checks %}
+  <div class="check-card" style="animation-delay:{{ forloop.counter0 }}0ms">
+    <div class="check-icon {% if c.grade == 'A' %}gA{% elif c.grade == 'B' %}gB{% else %}gC{% endif %}">
+      {% if c.grade == 'A' %}✅{% elif c.grade == 'B' %}⚠️{% else %}❌{% endif %}
+    </div>
+    <div class="check-body">
+      <div class="check-supplier">{{c.supplier_name}}</div>
+      <div class="check-date">{{c.created_at|default:"—"}}</div>
+    </div>
+    <div class="check-right">
+      <div class="check-score">{{c.score}}/100</div>
+      <div class="grade-badge g{{c.grade}}">Grade {{c.grade}}</div>
+    </div>
+  </div>
+  {% empty %}
+  <div class="empty-state">
+    <div class="empty-icon">✅</div>
+    <div class="empty-title">Koi check nahi abhi tak</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Action bar -->
+<div class="action-bar">
+  <a href="/quality/{{product.id}}/add-param/" class="ab-btn ab-secondary">+ Parameter</a>
+  <a href="/quality/{{product.id}}/add-check/" class="ab-btn ab-primary">+ Check Add Karo</a>
+</div>
+
+<script>
+  function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+</script>
+
+</body>
+</html>

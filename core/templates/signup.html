@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Sign Up — Qualify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Noto+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8622A;
+    --turmeric: #F2A93B;
+    --cream: #FAF6F0;
+    --cream-dark: #F0E9DF;
+    --indigo: #1A1A2E;
+    --text: #1C1C1C;
+    --text-muted: #7A7A7A;
+    --white: #FFFFFF;
+    --radius: 18px;
+    --green: #2A9D5C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    max-width: 430px;
+    margin: 0 auto;
+    display: flex; flex-direction: column;
+    padding-bottom: 32px;
+  }
+
+  .pattern-strip {
+    height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--saffron) 0px, var(--saffron) 8px,
+      var(--turmeric) 8px, var(--turmeric) 16px,
+      white 16px, white 20px,
+      var(--indigo) 20px, var(--indigo) 28px,
+      white 28px, white 32px
+    );
+    opacity: 0.65;
+  }
+
+  /* ─── TOP BAR ─── */
+  .top-bar {
+    display: flex; align-items: center;
+    padding: 16px 20px; gap: 12px;
+  }
+
+  .back-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--white); border: 1.5px solid rgba(0,0,0,0.08);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--text);
+    font-size: 17px; transition: all 0.15s; flex-shrink: 0;
+  }
+  .back-btn:active { background: var(--cream-dark); transform: scale(0.94); }
+
+  .top-logo {
+    font-family: 'Sora', sans-serif;
+    font-size: 18px; font-weight: 800;
+    color: var(--saffron); letter-spacing: -0.4px;
+  }
+
+  /* ─── STEP INDICATOR ─── */
+  .step-bar {
+    padding: 4px 24px 0;
+    display: flex; align-items: center; gap: 6px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .step-dot {
+    height: 4px; border-radius: 4px;
+    transition: all 0.3s;
+  }
+  .step-dot.active { background: var(--saffron); width: 24px; }
+  .step-dot.done { background: var(--saffron); opacity: 0.3; width: 12px; }
+  .step-dot.inactive { background: rgba(0,0,0,0.1); width: 12px; }
+
+  /* ─── HERO ─── */
+  .hero-area {
+    padding: 16px 24px 24px;
+    animation: fadeUp 0.45s 0.05s ease both;
+  }
+
+  .hero-area h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 28px; font-weight: 800;
+    letter-spacing: -0.9px; color: var(--indigo);
+    line-height: 1.2;
+  }
+  .hero-area h1 span { color: var(--saffron); }
+  .hero-area p {
+    margin-top: 7px; font-size: 14px;
+    color: var(--text-muted); line-height: 1.6;
+  }
+
+  /* ─── FORM CARD ─── */
+  .form-card {
+    margin: 0 16px;
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 26px 22px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+    animation: fadeUp 0.45s 0.1s ease both;
+  }
+
+  /* ─── SECTION DIVIDER IN FORM ─── */
+  .form-section-label {
+    font-family: 'Sora', sans-serif;
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--text-muted); margin: 20px 0 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .form-section-label::before, .form-section-label::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(0,0,0,0.07);
+  }
+  .form-section-label:first-child { margin-top: 0; }
+
+  /* ─── FIELDS ─── */
+  .field { margin-bottom: 14px; }
+
+  .field label {
+    display: block; font-family: 'Sora', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted); letter-spacing: 0.7px;
+    text-transform: uppercase; margin-bottom: 7px;
+  }
+
+  .input-wrap { position: relative; }
+
+  .input-icon {
+    position: absolute; left: 14px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px; opacity: 0.4; pointer-events: none;
+  }
+
+  .field input, .field select {
+    width: 100%; padding: 13px 14px 13px 42px;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 15px; color: var(--text);
+    background: var(--cream); outline: none;
+    transition: border-color 0.18s, background 0.18s;
+    -webkit-appearance: none; appearance: none;
+  }
+
+  .field input:focus, .field select:focus {
+    border-color: var(--saffron);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(232,98,42,0.08);
+  }
+
+  .field input::placeholder { color: #BABABA; }
+
+  .field select { cursor: pointer; color: var(--text); }
+  .field select option[value=""] { color: #BABABA; }
+
+  /* phone field with prefix */
+  .phone-wrap { position: relative; }
+  .phone-prefix {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    display: flex; align-items: center;
+    padding: 0 14px;
+    font-family: 'Sora', sans-serif; font-size: 14px;
+    font-weight: 600; color: var(--text-muted);
+    border-right: 1.5px solid rgba(0,0,0,0.1);
+    pointer-events: none;
+    width: 62px; justify-content: center;
+  }
+  .phone-input {
+    padding-left: 72px !important;
+  }
+
+  /* password strength */
+  .pw-toggle {
+    position: absolute; right: 14px; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    font-size: 15px; cursor: pointer; opacity: 0.4;
+    padding: 4px; transition: opacity 0.15s;
+  }
+  .pw-toggle:active { opacity: 0.8; }
+
+  .strength-bar {
+    margin-top: 7px;
+    display: flex; gap: 4px;
+  }
+  .strength-seg {
+    flex: 1; height: 3px; border-radius: 3px;
+    background: rgba(0,0,0,0.1); transition: background 0.3s;
+  }
+  .strength-seg.weak { background: #D93025; }
+  .strength-seg.medium { background: var(--turmeric); }
+  .strength-seg.strong { background: var(--green); }
+
+  .strength-label {
+    font-size: 11px; margin-top: 4px;
+    color: var(--text-muted); font-weight: 500;
+  }
+
+  /* ─── TERMS ─── */
+  .terms-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin: 18px 0 4px;
+  }
+
+  .terms-row input[type="checkbox"] {
+    width: 18px; height: 18px; border-radius: 5px;
+    accent-color: var(--saffron); flex-shrink: 0;
+    margin-top: 1px; cursor: pointer;
+    padding: 0 !important; border: none !important;
+    background: none !important;
+  }
+
+  .terms-text {
+    font-size: 12.5px; color: var(--text-muted); line-height: 1.55;
+  }
+
+  .terms-text a { color: var(--saffron); text-decoration: none; font-weight: 600; }
+
+  /* ─── SUBMIT ─── */
+  .btn-submit {
+    width: 100%; font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: white; background: var(--saffron);
+    border: none; padding: 15px; border-radius: 14px;
+    cursor: pointer; letter-spacing: -0.2px;
+    box-shadow: 0 6px 20px rgba(232,98,42,0.28);
+    transition: all 0.18s; margin-top: 18px;
+  }
+  .btn-submit:active { transform: scale(0.975); opacity: 0.88; }
+
+  /* ─── BENEFITS STRIP ─── */
+  .benefits-strip {
+    margin: 14px 16px 0;
+    background: var(--indigo); border-radius: 14px;
+    padding: 16px 18px;
+    display: flex; gap: 6px; flex-wrap: wrap;
+    animation: fadeUp 0.45s 0.18s ease both;
+  }
+
+  .benefit-pill {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 50px; padding: 5px 10px;
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+
+  .benefit-pill span { font-size: 13px; }
+
+  /* ─── LOGIN LINK ─── */
+  .login-row {
+    text-align: center; margin-top: 22px;
+    font-size: 14px; color: var(--text-muted);
+    animation: fadeUp 0.45s 0.22s ease both;
+  }
+  .login-row a {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; color: var(--saffron); text-decoration: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="pattern-strip"></div>
+
+<div class="top-bar">
+  <a href="/" class="back-btn">←</a>
+  <div class="top-logo">Qualify</div>
+</div>
+
+<div class="step-bar">
+  <div class="step-dot active"></div>
+  <div class="step-dot inactive"></div>
+  <div class="step-dot inactive"></div>
+</div>
+
+<div class="hero-area">
+  <h1>Apna account<br><span>banao</span> — free hai</h1>
+  <p>Kirana store details bharo. 2 minutes mein ready.</p>
+</div>
+
+<div class="form-card">
+  <form method="post" action="/auth/signup/" id="signup-form">
+    {% csrf_token %}
+
+    <div class="form-section-label">Store Details</div>
+
+    <div class="field">
+      <label>Store Name</label>
+      <div class="input-wrap">
+        <span class="input-icon">🏪</span>
+        <input
+          name="store_name"
+          type="text"
+          placeholder="e.g. Sharma General Store"
+          autocapitalize="words"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label>City / Town</label>
+      <div class="input-wrap">
+        <span class="input-icon">📍</span>
+        <input
+          name="city"
+          type="text"
+          placeholder="e.g. Pune, Mumbai, Nagpur"
+          autocapitalize="words"
+        >
+      </div>
+    </div>
+
+    <div class="form-section-label">Your Details</div>
+
+    <div class="field">
+      <label>Full Name</label>
+      <div class="input-wrap">
+        <span class="input-icon">👤</span>
+        <input
+          name="full_name"
+          type="text"
+          placeholder="Aapka naam"
+          autocapitalize="words"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Phone Number</label>
+      <div class="input-wrap phone-wrap">
+        <div class="phone-prefix">🇮🇳 +91</div>
+        <input
+          name="phone"
+          type="tel"
+          placeholder="98765 43210"
+          class="phone-input"
+          maxlength="10"
+          inputmode="numeric"
+        >
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Username</label>
+      <div class="input-wrap">
+        <span class="input-icon">@</span>
+        <input
+          name="username"
+          type="text"
+          placeholder="Choose a username"
+          autocomplete="username"
+          autocapitalize="none"
+        >
+      </div>
+    </div>
+
+    <div class="form-section-label">Set Password</div>
+
+    <div class="field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔒</span>
+        <input
+          name="password1"
+          type="password"
+          placeholder="Min. 8 characters"
+          id="pw1"
+          oninput="checkStrength()"
+          autocomplete="new-password"
+        >
+        <button type="button" class="pw-toggle" onclick="togglePw('pw1','tb1')" id="tb1">👁</button>
+      </div>
+      <div class="strength-bar" id="str-bar">
+        <div class="strength-seg" id="s1"></div>
+        <div class="strength-seg" id="s2"></div>
+        <div class="strength-seg" id="s3"></div>
+        <div class="strength-seg" id="s4"></div>
+      </div>
+      <div class="strength-label" id="str-label"></div>
+    </div>
+
+    <div class="field">
+      <label>Confirm Password</label>
+      <div class="input-wrap">
+        <span class="input-icon">🔒</span>
+        <input
+          name="password2"
+          type="password"
+          placeholder="Password dobara likho"
+          id="pw2"
+          autocomplete="new-password"
+        >
+        <button type="button" class="pw-toggle" onclick="togglePw('pw2','tb2')" id="tb2">👁</button>
+      </div>
+    </div>
+
+    <div class="terms-row">
+      <input type="checkbox" id="agree" name="agree" required>
+      <label for="agree" class="terms-text">
+        Main <a href="#">Terms of Service</a> aur <a href="#">Privacy Policy</a> se agree karta/karti hun.
+      </label>
+    </div>
+
+    <button type="submit" class="btn-submit">Account Banao — Free →</button>
+
+  </form>
+</div>
+
+<div class="benefits-strip">
+  <div class="benefit-pill"><span>✅</span> Free forever plan</div>
+  <div class="benefit-pill"><span>🔒</span> Secure data</div>
+  <div class="benefit-pill"><span>📱</span> Works on any phone</div>
+  <div class="benefit-pill"><span>🇮🇳</span> Made in India</div>
+</div>
+
+<div class="login-row">
+  Already have account? <a href="/auth/login/">Login karein</a>
+</div>
+
+<script>
+  function togglePw(id, btnId) {
+    const inp = document.getElementById(id);
+    const btn = document.getElementById(btnId);
+    if (inp.type === 'password') {
+      inp.type = 'text'; btn.textContent = '🙈';
+    } else {
+      inp.type = 'password'; btn.textContent = '👁';
+    }
+  }
+
+  function checkStrength() {
+    const pw = document.getElementById('pw1').value;
+    const segs = [document.getElementById('s1'), document.getElementById('s2'),
+                  document.getElementById('s3'), document.getElementById('s4')];
+    const label = document.getElementById('str-label');
+    segs.forEach(s => { s.className = 'strength-seg'; });
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    if (pw.length === 0) { label.textContent = ''; return; }
+    const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+    const labels = { weak: '⚠️ Weak password', medium: '🟡 Medium password', strong: '✅ Strong password' };
+    for (let i = 0; i < score; i++) segs[i].classList.add(cls);
+    label.textContent = labels[cls];
+    label.style.color = cls === 'weak' ? '#D93025' : cls === 'medium' ? '#E8962A' : '#2A9D5C';
+  }
+</script>
+
+</body>
+</html>

@@ -136,6 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-GEMINI_API_KEY = 'AIzaSyDMyKufm0vYNyURHZpxn4gufldailRy3M8'
+GEMINI_API_KEY = ''
 
 

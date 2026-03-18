@@ -1,7 +1,8 @@
 # quality/views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, QualityParameter, QualityCheck
+from quality_match.models import Product, QualityCheck
+from .models import QualityParameter
 from .utils import calculate_grade
 
 

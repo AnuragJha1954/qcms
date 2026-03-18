@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import Product, QualityCheck
 from .services import compare_images
 
@@ -9,7 +10,7 @@ def quality_match_page(request):
     products = Product.objects.all()
     return render(request, "quality_match.html", {"products": products})
 
-
+@csrf_exempt
 def quality_match_api(request):
 
     if request.method == "POST":

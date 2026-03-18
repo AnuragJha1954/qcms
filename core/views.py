@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from quality.models import Product, QualityCheck
+from quality_match.models import Product, QualityCheck
 from sourcing.models import Supplier
 from khata.models import Party, KhataEntry
 

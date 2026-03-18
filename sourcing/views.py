@@ -1,7 +1,8 @@
 # sourcing/views.py
 
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Supplier, Procurement, Product
+from .models import Supplier, Procurement
+from quality_match.models import Product
 from django.db.models import Sum, Avg
 # sourcing/views.py
 

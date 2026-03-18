@@ -33,3 +33,5 @@ class QualityCheck(models.Model):
     ai_response = models.JSONField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
+    score = models.FloatField()
+    grade = models.CharField(max_length=2)
